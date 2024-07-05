@@ -1,0 +1,154 @@
+where is the css file this is my existing css update according to the js code u gave now and give me the css code 
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.btn-nav {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-nav.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.content {
+  padding: 20px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-control, .form-select {
+  width: 30%;
+}
+
+.form-control {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background-color: #f4a261; /* Orange background for buttons */
+  border-color: #f4a261; /* Orange border for buttons */
+}
+
+/* Transaction Table Container */
+.table-container {
+  margin: 0 auto; /* Center align the table */
+  max-width: 200vh; /* Adjust the maximum width as needed */
+  padding: 0 20px; /* Add padding to create space from the margins */
+}
+
+/* Transaction Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff3cd; /* Light yellow background */
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f4a261; /* Orange background for headers */
+  color: white;
+}
+
+/* Pagination Container */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  background-color: #f4a261; /* Orange background for buttons */
+  color: white;
+  border: none;
+}
+
+.page-info {
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+.per-page-select {
+    display: inline-block;
+    text-align: center;
+    margin-left: 10px;
+    padding: 5px;
+    align-items: center;
+  }
+  
+  .per-page-select select {
+    width: auto; /* Allow the select element to adjust width based on content */
+    padding: 5px;
+    margin-left: 5px; /* Adjust margin as needed */
+  }
+
+/* Uniform Image Size */
+.transaction-image {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Bootstrap Override for Custom Styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Statistics Section */
+.statistics-section {
+    margin-top: 20px;
+    text-align: center; /* Align content to center */
+  }
+  
+  .statistics-section h2 {
+    color: #333; /* Adjust heading color */
+    margin-bottom: 10px;
+  }
+  
+  .statistics-card {
+    background-color: #c7ea46; /* Lemon green background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 600px; /* Adjust maximum width as needed */
+    margin: 0 auto; /* Center align horizontally */
+  }
+  
+  .statistics-card p {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+/* Chart Container */
+.chart-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff3cd; /* Light yellow background */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
