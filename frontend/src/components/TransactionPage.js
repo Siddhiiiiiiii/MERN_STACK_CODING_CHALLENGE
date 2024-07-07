@@ -47,7 +47,7 @@ const TransactionsPage = () => {
 
     const fetchTransactionsByMonth = async (month) => {
         try {
-            const response = await axios.get('https://mern-stack-coding-challenge.onrender.com', {
+            const response = await axios.get('https://mern-stack-coding-challenge.onrender.com/api/transactions', {
                 params: {
                     month,
                     page,
