@@ -3,10 +3,10 @@ const axios = require('axios');
 const router = express.Router();
 const Transaction = require('../models/Transaction');
 
+// Get transactions with filtering, search, and pagination
 router.get('/', async (req, res) => {
     const { month, search, page = 1, perPage = 10 } = req.query;
 
-     
     console.log('Received query params:', { month, search, page, perPage });
 
     const query = {
@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
             $eq: [{ $month: "$dateOfSale" }, parseInt(month, 10)]
         }
     };
-
 
     if (search) {
         query.$or = [
@@ -40,6 +39,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Add a new transaction
 router.post('/', async (req, res) => {
     try {
         const newTransaction = new Transaction(req.body);
@@ -50,42 +50,47 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Initialize the database with data from third-party API
 router.get('/initialize', async (req, res) => {
     try {
         const apiUrl = 'https://s3.amazonaws.com/roxiler.com/product_transaction.json';
-
-        let page = 1;
+        const batchSize = 60; s
         let allData = [];
 
-        while (true) {
-            const response = await axios.get(apiUrl, {
-                params: { page },
-            });
+        console.log('Starting data fetch for 60 items...');
+        const response = await axios.get(apiUrl, {
+            params: { page: 1 },
+        });
 
-            const data = response.data;
+        const data = response.data;
+        console.log(`Fetched 60 items from page 1`);
 
-            if (!Array.isArray(data) || data.length === 0) {
-                break;
-            }
-
-            allData = [...allData, ...data];
-            page++;
+        if (!Array.isArray(data) || data.length === 0) {
+            console.log('No data fetched from API.');
+            return res.status(404).send({ message: 'No data fetched from API.' });
         }
-        await Transaction.deleteMany({});
-        const transformedData = allData.map(item => ({
-            id: item.id.toString(),
-            productTitle: item.title, 
-            productDescription: item.description, 
-            price: item.price,
-            category: item.category,
-            image: item.image,
-            sold: item.sold,
-            dateOfSale: new Date(item.dateOfSale)
-        }));
+        allData.push(...data);
 
-        console.log('Transformed Data:', transformedData);
+        console.log(`Data fetch complete, inserting ${allData.length} items into database...`);
+        await Transaction.deleteMany({}); 
 
-        await Transaction.insertMany(transformedData);
+        for (let i = 0; i < allData.length; i += batchSize) {
+            const batch = allData.slice(i, i + batchSize).map(item => ({
+                id: item.id.toString(),
+                productTitle: item.title,
+                productDescription: item.description,
+                price: item.price,
+                category: item.category,
+                image: item.image,
+                sold: item.sold,
+                dateOfSale: new Date(item.dateOfSale)
+            }));
+
+            await Transaction.insertMany(batch); 
+            console.log(`Inserted batch ${i / batchSize + 1}`);
+        }
+
+        console.log('Database initialization complete.');
 
         res.status(200).send({ message: 'Database initialized with data from third-party API' });
     } catch (error) {
@@ -93,7 +98,5 @@ router.get('/initialize', async (req, res) => {
         res.status(500).send({ error: 'Failed to initialize database', message: error.message });
     }
 });
-
-
 
 module.exports = router;

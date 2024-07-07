@@ -8,11 +8,18 @@ const combinedApiRouter = require('./routes/combinedAPI');
 
 const app = express();
 
+// connectDB();
+
+// CORS configuration
+const corsOptions = {
+  origin: 'https://mern-stack-coding-challenge.vercel.app/', 
+  optionsSuccessStatus: 200,
+};
 
 app.use(cors());
 
 
-mongoose.connect('mongodb://localhost:27017/MERN_STACK', {
+mongoose.connect('mongodb+srv://siddhibhosale:hujO6JsBxI0V4ZXJ@cluster0.5fcdbte.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
